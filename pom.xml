@@ -12,17 +12,14 @@
     <properties> <!-- It is important to keep up to date manually. -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <nukkit.version>1.0-SNAPSHOT</nukkit.version>
-        <bungee.chat.version>1.9-SNAPSHOT</bungee.chat.version>
-        <redisson.version>2.1.2</redisson.version>
-        <slf4j.version>1.7.12</slf4j.version>
-        <kryo.version>3.0.0</kryo.version>
-        <jackson.version>2.5.4</jackson.version>
     </properties>
 
     <repositories>
         <repository>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <id>main</id>
+            <id>spacehq</id>
+            <name>SpaceHQ Repository</name>
+            <layout>default</layout>
+            <url>https://repo.spacehq.org/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
@@ -41,8 +38,6 @@
             <groupId>org.spacehq</groupId>
             <artifactId>mcauthlib</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/mcauthlib.jar</systemPath>
         </dependency>
 
         <!-- Guava -->
@@ -84,12 +79,12 @@
                                     <include>org.spacehq:mcauthlib</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
+                            <!--relocations>
                                 <relocation>
-                                    <pattern>org.spacehq</pattern>
-                                    <shadedPattern>shaded.org.spacehq</shadedPattern>
+                                    <pattern>org.spacehq.mc</pattern>
+                                    <shadedPattern>shaded.org.spacehq.mc</shadedPattern>
                                 </relocation>
-                            </relocations>
+                            </relocations-->
                         </configuration>
                     </execution>
                 </executions>
