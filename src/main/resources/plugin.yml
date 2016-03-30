@@ -1,0 +1,16 @@
+name: ${project.name}
+main: me.hqm.mcauth4pe.MCA4PEPlugin
+version: ${project.version}
+api: ["1.0.0"]
+description: Mojang account authorization for Minecraft PE and Windows 10 Edition.
+author: HmmmQuestionMark
+commands:
+  login:
+    usage: /login <email> <password>
+  setbox:
+    usage: /setbox
+permisions:
+  mcauth.bypass:
+    default: op
+  mcauth.setbox:
+    default: op

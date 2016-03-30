@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.hqm</groupId>
+    <artifactId>mcauth4pe</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>MCAuth4PE</name>
+    <properties> <!-- It is important to keep up to date manually. -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nukkit.version>1.0-SNAPSHOT</nukkit.version>
+        <bungee.chat.version>1.9-SNAPSHOT</bungee.chat.version>
+        <redisson.version>2.1.2</redisson.version>
+        <slf4j.version>1.7.12</slf4j.version>
+        <kryo.version>3.0.0</kryo.version>
+        <jackson.version>2.5.4</jackson.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>main</id>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- Nukkit -->
+        <dependency>
+            <groupId>cn.nukkit</groupId>
+            <artifactId>nukkit</artifactId>
+            <version>${nukkit.version}</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/nukkit.jar</systemPath>
+        </dependency>
+
+        <!-- MCAuthLib -->
+        <dependency>
+            <groupId>org.spacehq</groupId>
+            <artifactId>mcauthlib</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/mcauthlib.jar</systemPath>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>17.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <defaultGoal>clean install</defaultGoal>
+        <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+                <includes>
+                    <include>*.yml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.spacehq:mcauthlib</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.spacehq</pattern>
+                                    <shadedPattern>shaded.org.spacehq</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>1.0-alpha-3</version>
+                <executions>
+                    <execution>
+                        <id>filter-src</id>
+                        <goals>
+                            <goal>filter-sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <preparationGoals>assembly:assembly</preparationGoals>
+                    <goals>assembly:assembly</goals>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
